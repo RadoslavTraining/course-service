@@ -18,7 +18,7 @@ public class CourseController {
     @Autowired
     CourseService courseService;
 
-    @GetMapping("/")
+    @GetMapping
     public List<Course> getAllCourses() {
         log.info("Inside getAllCourses method in CourseController");
         return  courseService.findAllCourses();
