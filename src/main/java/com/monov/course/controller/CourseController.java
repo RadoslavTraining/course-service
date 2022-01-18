@@ -1,8 +1,8 @@
 package com.monov.course.controller;
 
 
-import com.monov.course.dto.CourseDTO;
-import com.monov.course.dto.CourseSearchRequest;
+import com.monov.commons.dto.CourseDTO;
+import com.monov.commons.dto.CourseSearchRequest;
 import com.monov.course.entity.Course;
 import com.monov.course.service.CourseService;
 import lombok.extern.slf4j.Slf4j;

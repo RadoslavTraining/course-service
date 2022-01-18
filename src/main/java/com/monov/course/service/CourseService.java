@@ -1,7 +1,7 @@
 package com.monov.course.service;
 
-import com.monov.course.dto.CourseDTO;
-import com.monov.course.dto.CourseSearchRequest;
+import com.monov.commons.dto.CourseDTO;
+import com.monov.commons.dto.CourseSearchRequest;
 import com.monov.course.entity.Course;
 import com.monov.course.repository.CourseRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class CourseService {
 
     public CourseDTO findById(Long id){
         log.info("Inside findById method in CourseService");
-        return new CourseDTO(courseRepository.findById(id).get());
+        return convertToCourseDTO(courseRepository.findById(id).get());
     }
 
     public List<CourseDTO> findAllCourses(){
@@ -31,7 +31,7 @@ public class CourseService {
 
     public CourseDTO saveCourse(Course course) {
         log.info("Inside saveCourse method in CourseService");
-        return new CourseDTO(courseRepository.save(course));
+        return convertToCourseDTO(courseRepository.save(course));
     }
 
     public CourseDTO addStudentToCourse(Long courseId, Long studentId) {
@@ -39,7 +39,7 @@ public class CourseService {
         Course courseToUpdate = courseRepository.getById(courseId);
         courseToUpdate.getStudentIds().add(studentId);
         courseRepository.save(courseToUpdate);
-        return new CourseDTO(courseToUpdate);
+        return convertToCourseDTO(courseToUpdate);
     }
 
     public List<Long> findStudentIdsByCourseId(Long courseId) {
@@ -56,8 +56,16 @@ public class CourseService {
 
     private List<CourseDTO> convertToCourseDTOs(List<Course> courseEntities) {
         return courseEntities.stream()
-                .map(CourseDTO::new)
+                .map(this::convertToCourseDTO)
                 .collect(Collectors.toList());
+    }
+
+    private CourseDTO convertToCourseDTO(Course course) {
+        CourseDTO courseDTO = new CourseDTO();
+        courseDTO.setId(course.getId());
+        courseDTO.setName(course.getName());
+
+        return courseDTO;
     }
 
 }
