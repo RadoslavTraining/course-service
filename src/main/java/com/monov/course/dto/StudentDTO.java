@@ -1,18 +1,16 @@
-package com.monov.course.data;
+package com.monov.course.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student {
+public class StudentDTO {
 
-    private Long studentId;
+    private Long id;
     private String firstName;
     private String lastName;
-    private List<Long> courseIds;
 
 }

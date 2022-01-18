@@ -1,16 +1,14 @@
-package com.monov.course.data;
+package com.monov.course.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentIds {
+public class CourseSearchRequest {
 
-    private List<Long> ids;
+    private Long studentId;
 
 }
