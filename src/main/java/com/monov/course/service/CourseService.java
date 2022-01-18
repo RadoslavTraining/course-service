@@ -19,7 +19,7 @@ public class CourseService {
 
     public Course findById(Long id){
         log.info("Inside findById method in CourseService");
-        return courseRepository.findByCourseId(id);
+        return courseRepository.findById(id).get();
     }
 
     public List<Course> findAllCourses(){

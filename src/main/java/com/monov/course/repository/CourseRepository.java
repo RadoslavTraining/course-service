@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CourseRepository extends JpaRepository<Course,Long> {
 
-    Course findByCourseId(Long id);
+    Optional<Course> findById(Long id);
 
     @Query(value = "SELECT student_id FROM course_student_ids where course_id = :courseid",
             nativeQuery = true)
@@ -19,7 +20,7 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
             nativeQuery = true)
     List<Long> findCourseIdsByStudentId(@Param("studentid") Long studentId);
 
-    @Query(value = "SELECT * FROM COURSE as c JOIN course_student_ids as csids  ON c.courseId=csids.course_id where " +
+    @Query(value = "SELECT * FROM COURSE as c JOIN course_student_ids as csids  ON c.id=csids.course_id where " +
             "csids.student_id=:studentid", nativeQuery = true)
     List<Course> findCoursesByStudentId(@Param("studentid") Long studentid);
 }
