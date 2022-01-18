@@ -1,11 +1,13 @@
 package com.monov.course.service;
 
+import com.monov.course.data.CourseSearchRequest;
 import com.monov.course.entity.Course;
 import com.monov.course.repository.CourseRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,4 +44,29 @@ public class CourseService {
         courseRepository.save(courseToUpdate);
         return courseToUpdate;
     }
+
+    public List<Long> findStudentIdsByCoursId(Long courseId) {
+        return courseRepository.findStudentIdsByCourseId(courseId);
+    }
+
+    public List<Long> findCourseIdsByStudentId(Long studentId) {
+        return courseRepository.findCourseIdsByStudentId(studentId);
+    }
+    //reeq1
+    public List<Course> searchCourses(CourseSearchRequest request) {
+        if(request.getStudentId() != null) {
+            return courseRepository.findCoursesByStudentId(request.getStudentId());
+        }
+
+        return new ArrayList<>();
+    }
+//reeq1
+//    public List<Course> findCoursesByStudentId(Long studentId) {
+//        return courseRepository.findCoursesByStudentId(studentId);
+//    }
+    public List<Course> findCoursesByStudentId(CourseSearchRequest request) {
+        return courseRepository.findCoursesByStudentId(request.getStudentId());
+    }
+
+
 }

@@ -7,6 +7,7 @@ import com.monov.course.service.CourseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.monov.course.data.CourseSearchRequest;
 
 import java.util.List;
 
@@ -49,4 +50,31 @@ public class CourseController {
         return courseService.addStudentToCourse(courseId,studentId);
     }
 
+//    @GetMapping("/students/{courseId}")
+//    public List<Long> findStudentIdsByCourseId(@PathVariable(name = "courseId") Long courseId) {
+//        return courseService.findStudentIdsByCoursId(courseId);
+//    }
+//
+//    @PostMapping("/search")
+//    public List<Long> findCourseIdsByStudentId(@RequestBody CourseSearchRequest request) {
+//        return courseService.searchCourse(request);
+//    }
+
+//// requirement 1
+//    @GetMapping("/students/{studentId}")
+//    public List<Course> findCoursesByStudentId(@PathVariable(name = "studentId") Long studentId) {
+//        return courseService.findCoursesByStudentId(studentId);
+//    }
+
+    // requirement 1
+    @PostMapping("/students")
+    public List<Course> findCoursesByStudentId(@RequestBody CourseSearchRequest request) {
+        return courseService.searchCourses(request);
+    }
+
+    //req 2
+    @GetMapping("/students/{courseId}")
+    public List<Long> findStudentIdsByCourseId(@PathVariable(name = "courseId") Long courseId) {
+        return courseService.findStudentIdsByCoursId(courseId);
+    }
 }
