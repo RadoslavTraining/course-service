@@ -45,13 +45,10 @@ public class CourseService {
         return courseToUpdate;
     }
 
-    public List<Long> findStudentIdsByCoursId(Long courseId) {
+    public List<Long> findStudentIdsByCourseId(Long courseId) {
         return courseRepository.findStudentIdsByCourseId(courseId);
     }
 
-    public List<Long> findCourseIdsByStudentId(Long studentId) {
-        return courseRepository.findCourseIdsByStudentId(studentId);
-    }
     //reeq1
     public List<Course> searchCourses(CourseSearchRequest request) {
         if(request.getStudentId() != null) {
@@ -60,13 +57,5 @@ public class CourseService {
 
         return new ArrayList<>();
     }
-//reeq1
-//    public List<Course> findCoursesByStudentId(Long studentId) {
-//        return courseRepository.findCoursesByStudentId(studentId);
-//    }
-    public List<Course> findCoursesByStudentId(CourseSearchRequest request) {
-        return courseRepository.findCoursesByStudentId(request.getStudentId());
-    }
-
 
 }
