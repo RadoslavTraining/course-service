@@ -17,9 +17,14 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long courseId;
+    @Column(name = "id")
+    private Long id;
     private String name;
     @ElementCollection
+    @CollectionTable(name = "course_student_ids"
+            ,joinColumns = @JoinColumn(name = "course_id",referencedColumnName = "id")
+    )
+    @Column(name = "student_id")
     private List<Long> studentIds;
 
 }
