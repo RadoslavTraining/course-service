@@ -1,5 +1,6 @@
 package com.monov.course.exception;
 
+import com.monov.commons.exceptions.ItemNotFoundException;
 import com.monov.course.response.CourseResponseHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +11,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class CourseResponseExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(CourseNotFoundException.class)
-    public ResponseEntity<String> handleCourseNotFoundException(CourseNotFoundException exception) {
-        return CourseResponseHandler.generateErrorResponse(String.format("Course with id %d not found",exception.getCourseId()),
+    @ExceptionHandler(ItemNotFoundException.class)
+    public ResponseEntity<String> handleCourseNotFoundException(ItemNotFoundException exception) {
+        return CourseResponseHandler.generateErrorResponse(String.format("Course with id %d not found",exception.getId()),
                 HttpStatus.NOT_FOUND);
     }
 

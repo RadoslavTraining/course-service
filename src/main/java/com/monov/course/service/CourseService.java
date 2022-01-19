@@ -2,15 +2,14 @@ package com.monov.course.service;
 
 import com.monov.commons.dto.CourseDTO;
 import com.monov.commons.dto.CourseSearchRequest;
+import com.monov.commons.exceptions.ItemNotFoundException;
 import com.monov.course.entity.Course;
-import com.monov.course.exception.CourseNotFoundException;
 import com.monov.course.exception.StudentAlreadyEnrolledException;
 import com.monov.course.repository.CourseRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +28,7 @@ public class CourseService {
         if(course.isPresent()) {
             return convertToCourseDTO(courseRepository.findById(id).get());
         }
-        throw new CourseNotFoundException(id);
+        throw new ItemNotFoundException(id);
     }
 
     public List<CourseDTO> findAllCourses(){
@@ -55,7 +54,7 @@ public class CourseService {
             courseRepository.save(courseToUpdate);
             return convertToCourseDTO(courseToUpdate);
         }
-        throw new CourseNotFoundException(courseId);
+        throw new ItemNotFoundException(courseId);
 
     }
 
