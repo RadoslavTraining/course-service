@@ -24,7 +24,6 @@ public class Course {
     @Column(name = "id")
     private Long id;
     @NotEmpty
-    @NotNull
     private String name;
     @ElementCollection
     @CollectionTable(name = "course_student_ids"

@@ -12,10 +12,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class CourseResponseExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @Value("${exceptions.itemnotfound.message}")
+    @Value("${exceptions.item-not-found.message}")
     private String itemNotFoundMessage;
 
-    @Value("${exceptions.studentalreadyenrolled.message}")
+    @Value("${exceptions.student-already-enrolled.message}")
     private String studentEnrolledMessage;
 
     @ExceptionHandler(ItemNotFoundException.class)

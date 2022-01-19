@@ -17,7 +17,7 @@ eureka:
     hostname: localhost
 
 exceptions:
-  itemnotfound:
+  item-not-found:
     message: Course with id %d not found
-  studentalreadyenrolled:
+  student-already-enrolled:
     message: Student with id %d already enrolled in course with id %d
