@@ -2,9 +2,7 @@ package com.monov.course.exception;
 
 import com.monov.commons.exceptions.ItemNotFoundException;
 import com.monov.course.response.CourseResponseHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,9 +17,6 @@ public class CourseResponseExceptionHandler extends ResponseEntityExceptionHandl
 
     @Value("${exceptions.studentalreadyenrolled.message}")
     private String studentEnrolledMessage;
-
-    @Autowired
-    Environment env;
 
     @ExceptionHandler(ItemNotFoundException.class)
     public ResponseEntity<String> handleCourseNotFoundException(ItemNotFoundException exception) {
