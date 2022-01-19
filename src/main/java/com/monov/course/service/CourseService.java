@@ -3,13 +3,17 @@ package com.monov.course.service;
 import com.monov.commons.dto.CourseDTO;
 import com.monov.commons.dto.CourseSearchRequest;
 import com.monov.course.entity.Course;
+import com.monov.course.exception.CourseNotFoundException;
+import com.monov.course.exception.StudentAlreadyEnrolledException;
 import com.monov.course.repository.CourseRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,7 +25,11 @@ public class CourseService {
 
     public CourseDTO findById(Long id){
         log.info("Inside findById method in CourseService");
-        return convertToCourseDTO(courseRepository.findById(id).get());
+        Optional<Course> course = courseRepository.findById(id);
+        if(course.isPresent()) {
+            return convertToCourseDTO(courseRepository.findById(id).get());
+        }
+        throw new CourseNotFoundException();
     }
 
     public List<CourseDTO> findAllCourses(){
@@ -36,10 +44,19 @@ public class CourseService {
 
     public CourseDTO addStudentToCourse(Long courseId, Long studentId) {
         log.info("Inside addStudentToCourse method in CourseService");
-        Course courseToUpdate = courseRepository.getById(courseId);
-        courseToUpdate.getStudentIds().add(studentId);
-        courseRepository.save(courseToUpdate);
-        return convertToCourseDTO(courseToUpdate);
+
+        Optional<Course> course = courseRepository.findById(courseId);
+        if(course.isPresent()) {
+            Course courseToUpdate = course.get();
+            if(courseToUpdate.getStudentIds().contains(studentId)) {
+                throw new StudentAlreadyEnrolledException();
+            }
+            courseToUpdate.getStudentIds().add(studentId);
+            courseRepository.save(courseToUpdate);
+            return convertToCourseDTO(courseToUpdate);
+        }
+        throw new CourseNotFoundException();
+
     }
 
     public List<Long> findStudentIdsByCourseId(Long courseId) {
