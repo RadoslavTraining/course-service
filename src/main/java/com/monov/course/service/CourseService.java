@@ -29,7 +29,7 @@ public class CourseService {
         if(course.isPresent()) {
             return convertToCourseDTO(courseRepository.findById(id).get());
         }
-        throw new CourseNotFoundException();
+        throw new CourseNotFoundException(id);
     }
 
     public List<CourseDTO> findAllCourses(){
@@ -49,13 +49,13 @@ public class CourseService {
         if(course.isPresent()) {
             Course courseToUpdate = course.get();
             if(courseToUpdate.getStudentIds().contains(studentId)) {
-                throw new StudentAlreadyEnrolledException();
+                throw new StudentAlreadyEnrolledException(courseId,studentId);
             }
             courseToUpdate.getStudentIds().add(studentId);
             courseRepository.save(courseToUpdate);
             return convertToCourseDTO(courseToUpdate);
         }
-        throw new CourseNotFoundException();
+        throw new CourseNotFoundException(courseId);
 
     }
 

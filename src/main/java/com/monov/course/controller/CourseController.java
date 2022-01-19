@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -41,7 +40,6 @@ public class CourseController {
         log.info("Inside findCourseById method in CourseController");
         return CourseResponseHandler.generateSuccessResponse(HttpStatus.OK,
                 courseService.findById(courseId));
-//        return courseService.findById(courseId);
     }
 
     @PostMapping("/{courseId}/{studentId}")
@@ -50,20 +48,16 @@ public class CourseController {
         log.info("Inside addStudentToCourse method in CourseController");
         return CourseResponseHandler.generateSuccessResponse(HttpStatus.OK,courseService.addStudentToCourse(courseId,
                 studentId));
-//        return courseService.addStudentToCourse(courseId,studentId);
     }
 
     @PostMapping("/students")
     public ResponseEntity<List<CourseDTO>> findCoursesByStudentId(@RequestBody CourseSearchRequest request) {
         return CourseResponseHandler.generateListSuccessResponse(HttpStatus.OK,courseService.searchCourses(request));
-//        return courseService.searchCourses(request);
     }
 
     @GetMapping("/students/{courseId}")
     public ResponseEntity<List<Long>> findStudentIdsByCourseId(@PathVariable(name = "courseId") Long courseId) {
         return LongResponseHandler.generateListSuccessResponse(HttpStatus.OK,
                 courseService.findStudentIdsByCourseId(courseId));
-
-//        return courseService.findStudentIdsByCourseId(courseId);
     }
 }
