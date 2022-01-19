@@ -15,3 +15,9 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     hostname: localhost
+
+exceptions:
+  itemnotfound:
+    message: Course with id %d not found
+  studentalreadyenrolled:
+    message: Student with id %d already enrolled in course with id %d
