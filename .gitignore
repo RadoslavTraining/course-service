@@ -68,3 +68,4 @@ secrets.yml
 .sts4-cache
 *.bak
 .idea/compiler.xml
+target/**
