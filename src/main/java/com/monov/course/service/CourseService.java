@@ -1,7 +1,7 @@
 package com.monov.course.service;
 
 import com.monov.commons.dto.CourseDTO;
-import com.monov.commons.dto.CourseSearchRequest;
+import com.monov.commons.dto.CourseSearchRequestDTO;
 import com.monov.commons.exceptions.ItemNotFoundException;
 import com.monov.course.entity.Course;
 import com.monov.course.exception.StudentAlreadyEnrolledException;
@@ -62,7 +62,7 @@ public class CourseService {
         return courseRepository.findStudentIdsByCourseId(courseId);
     }
 
-    public List<CourseDTO> searchCourses(CourseSearchRequest request) {
+    public List<CourseDTO> searchCourses(CourseSearchRequestDTO request) {
         if(request.getStudentId() != null) {
             return convertToCourseDTOs(courseRepository.findCoursesByStudentId(request.getStudentId()));
         }

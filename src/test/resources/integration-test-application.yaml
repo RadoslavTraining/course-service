@@ -1,0 +1,17 @@
+server:
+  port: 9002
+
+spring:
+  application:
+    name: COURSE-SERVICE
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+  jpa:
+    defer-datasource-initialization: true
+
+exceptions:
+  item-not-found:
+    message: Course with id %d not found
+  student-already-enrolled:
+    message: Student with id %d already enrolled in course with id %d
