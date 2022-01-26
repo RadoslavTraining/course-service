@@ -60,8 +60,6 @@ public class CourseService {
 
     public List<String> findStudentIdsByCourseId(String courseId) {
         return  courseRepository.findStudentIdsByCourseId(courseId);
-//        List<UUID> uuids = uuidStrings.stream().map(UUIDConverter::getUUID).collect(Collectors.toList());
-//        return uuids;
     }
 
     public List<CourseDTO> searchCourses(CourseSearchRequestDTO request) {
@@ -85,19 +83,5 @@ public class CourseService {
 
         return courseDTO;
     }
-//
-//    public Course zapisvai(UUID courseId, String studentId) {
-//        Optional<Course> course = courseRepository.findById(courseId);
-//        if(course.isPresent()) {
-//            Course courseToUpdate = course.get();
-//            courseToUpdate.getCourseStudentPairs().add(new CourseStudentPair(courseId,studentId));
-//            courseRepository.save(courseToUpdate);
-//            return courseToUpdate;
-//        }
-//        return  null;
-//    }
-//
-//    public List<Object> findPairs(UUID studentId) {
-//        return courseRepository.findPairs(studentId);
-//    }
+
 }
