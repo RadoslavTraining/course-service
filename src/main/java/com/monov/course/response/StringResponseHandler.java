@@ -5,10 +5,10 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public class LongResponseHandler {
+public class StringResponseHandler {
 
-    public static ResponseEntity<List<Long>> generateListSuccessResponse(HttpStatus status,
-                                                                              List<Long> response) {
+    public static ResponseEntity<List<String>> generateListSuccessResponse(HttpStatus status,
+                                                                         List<String> response) {
         return new ResponseEntity<>(response,status);
     }
 

@@ -22,7 +22,7 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public CourseDTO findById(Long id){
+    public CourseDTO findById(String id){
         log.info("Inside findById method in CourseService");
         Optional<Course> course = courseRepository.findById(id);
         if(course.isPresent()) {
@@ -41,7 +41,7 @@ public class CourseService {
         return convertToCourseDTO(courseRepository.save(course));
     }
 
-    public CourseDTO addStudentToCourse(Long courseId, Long studentId) {
+    public CourseDTO addStudentToCourse(String courseId, String studentId) {
         log.info("Inside addStudentToCourse method in CourseService");
 
         Optional<Course> course = courseRepository.findById(courseId);
@@ -58,8 +58,10 @@ public class CourseService {
 
     }
 
-    public List<Long> findStudentIdsByCourseId(Long courseId) {
-        return courseRepository.findStudentIdsByCourseId(courseId);
+    public List<String> findStudentIdsByCourseId(String courseId) {
+        return  courseRepository.findStudentIdsByCourseId(courseId);
+//        List<UUID> uuids = uuidStrings.stream().map(UUIDConverter::getUUID).collect(Collectors.toList());
+//        return uuids;
     }
 
     public List<CourseDTO> searchCourses(CourseSearchRequestDTO request) {
@@ -83,5 +85,19 @@ public class CourseService {
 
         return courseDTO;
     }
-
+//
+//    public Course zapisvai(UUID courseId, String studentId) {
+//        Optional<Course> course = courseRepository.findById(courseId);
+//        if(course.isPresent()) {
+//            Course courseToUpdate = course.get();
+//            courseToUpdate.getCourseStudentPairs().add(new CourseStudentPair(courseId,studentId));
+//            courseRepository.save(courseToUpdate);
+//            return courseToUpdate;
+//        }
+//        return  null;
+//    }
+//
+//    public List<Object> findPairs(UUID studentId) {
+//        return courseRepository.findPairs(studentId);
+//    }
 }

@@ -1,3 +1,3 @@
-INSERT INTO COURSE (name) VALUES ('TESTBiology');
-INSERT INTO COURSE (name) VALUES ('TESTChemistry');
+INSERT INTO COURSE (name, id) VALUES ('TESTBiology','sampleID1');
+INSERT INTO COURSE (name, id) VALUES ('TESTChemistry', 'sampleID2');
 

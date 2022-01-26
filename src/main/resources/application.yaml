@@ -12,6 +12,6 @@ spring:
 
 exceptions:
   item-not-found:
-    message: Course with id %d not found
+    message: Course with id %s not found
   student-already-enrolled:
-    message: Student with id %d already enrolled in course with id %d
+    message: Student with id %s already enrolled in course with id %s

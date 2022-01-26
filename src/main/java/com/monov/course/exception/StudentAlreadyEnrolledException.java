@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StudentAlreadyEnrolledException extends RuntimeException{
 
-    private Long courseId;
-    private Long studentId;
+    private String courseId;
+    private String studentId;
 
 }
