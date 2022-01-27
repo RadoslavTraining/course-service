@@ -5,7 +5,7 @@ import com.monov.commons.dto.CourseDTO;
 import com.monov.commons.dto.CourseSearchRequestDTO;
 import com.monov.course.entity.Course;
 import com.monov.course.response.CourseResponseHandler;
-import com.monov.course.response.LongResponseHandler;
+import com.monov.course.response.StringResponseHandler;
 import com.monov.course.service.CourseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,15 +48,15 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CourseDTO> findCourseById(@PathVariable("id") Long courseId) {
+    public ResponseEntity<CourseDTO> findCourseById(@PathVariable("id") String courseId) {
         log.info("Inside findCourseById method in CourseController");
         return CourseResponseHandler.generateSuccessResponse(HttpStatus.OK,
                 courseService.findById(courseId));
     }
 
     @PostMapping("/{courseId}/{studentId}")
-    public ResponseEntity<CourseDTO> addStudentToCourse(@PathVariable("courseId") Long courseId,
-                                     @PathVariable("studentId") Long studentId) {
+    public ResponseEntity<CourseDTO> addStudentToCourse(@PathVariable("courseId") String courseId,
+                                     @PathVariable("studentId") String studentId) {
         log.info("Inside addStudentToCourse method in CourseController");
         return CourseResponseHandler.generateSuccessResponse(HttpStatus.OK,courseService.addStudentToCourse(courseId,
                 studentId));
@@ -68,8 +68,8 @@ public class CourseController {
     }
 
     @GetMapping("/students/{courseId}")
-    public ResponseEntity<List<Long>> findStudentIdsByCourseId(@PathVariable(name = "courseId") Long courseId) {
-        return LongResponseHandler.generateListSuccessResponse(HttpStatus.OK,
+    public ResponseEntity<List<String>> findStudentIdsByCourseId(@PathVariable(name = "courseId") String courseId) {
+        return StringResponseHandler.generateListSuccessResponse(HttpStatus.OK,
                 courseService.findStudentIdsByCourseId(courseId));
     }
 
@@ -85,4 +85,5 @@ public class CourseController {
         });
         return errors;
     }
+
 }

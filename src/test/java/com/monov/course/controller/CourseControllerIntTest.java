@@ -14,15 +14,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 import static com.monov.commons.utils.StringUtils.asJsonString;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.hasValue;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,6 +34,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = { "spring.config.location = classpath:integration-test-application.yaml" })
 @Transactional
 class CourseControllerIntTest {
+    private final String firstSampleDataCourseID = "sampleID1";
+    private final String secondSampleDataCourseID = "sampleID2";
+    private final String firstSampleDataStudentID = UUID.randomUUID().toString();
+    private final String secondSampleDataStudentID = UUID.randomUUID().toString();
 
     @Autowired
     private MockMvc mvc;
@@ -58,36 +62,31 @@ class CourseControllerIntTest {
                 .content(asJsonString(course)))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(jsonPath("$.name", is(courseName)))
-                .andExpect(jsonPath("$.id", is(3)));
+                .andExpect(jsonPath("$.name", is(courseName)));
     }
 
     @Test
     void findCourseById() throws Exception{
-        final Integer id = 1;
-        mvc.perform(get(String.format("/courses/%d",id))
+        mvc.perform(get(String.format("/courses/%s",firstSampleDataCourseID))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(id)));
+                .andExpect(jsonPath("$.id", is(firstSampleDataCourseID)));
     }
 
     @Test
     void addStudentToCourse() throws Exception{
-        final Integer courseId = 1;
-        final Integer studentId = 1;
+        final String courseId = firstSampleDataCourseID;
+        final String studentId = firstSampleDataStudentID;
 
         addStudentToCourse(courseId,studentId);
     }
 
     @Test
     void findCoursesByStudentId() throws Exception{
-        final Integer firstCourseId=1;
-        final Integer secondCourseId=2;
-        final Integer studentId=1;
-        addStudentToCourse(firstCourseId,studentId);
-        addStudentToCourse(secondCourseId,studentId);
-        CourseSearchRequestDTO searchRequestDTO = new CourseSearchRequestDTO(Long.valueOf(studentId));
+        addStudentToCourse(firstSampleDataCourseID, firstSampleDataStudentID);
+        addStudentToCourse(secondSampleDataCourseID, firstSampleDataStudentID);
+        CourseSearchRequestDTO searchRequestDTO = new CourseSearchRequestDTO(firstSampleDataStudentID);
         mvc.perform(post("/courses/students")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(searchRequestDTO)))
@@ -98,22 +97,19 @@ class CourseControllerIntTest {
 
     @Test
     void findStudentIdsByCourseId() throws Exception{
-        final Integer courseId=1;
-        final Integer firstStudentId=1;
-        final Integer secondStudentId=2;
-        addStudentToCourse(courseId,firstStudentId);
-        addStudentToCourse(courseId,secondStudentId);
+        addStudentToCourse(firstSampleDataCourseID,firstSampleDataStudentID);
+        addStudentToCourse(firstSampleDataCourseID,secondSampleDataStudentID);
 
-        mvc.perform(get(String.format("/courses/students/%d", courseId)))
+        mvc.perform(get(String.format("/courses/students/%s", firstSampleDataCourseID)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$", containsInAnyOrder(firstStudentId,secondStudentId)));
+                .andExpect(jsonPath("$", containsInAnyOrder(firstSampleDataStudentID,secondSampleDataStudentID)));
 
     }
 
-    private void addStudentToCourse(Integer courseId, Integer studentId) throws Exception{
-        mvc.perform(post(String.format("/courses/%d/%d", courseId, studentId)))
+    private void addStudentToCourse(String courseId, String studentId) throws Exception{
+        mvc.perform(post(String.format("/courses/%s/%s", courseId, studentId)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(courseId)));
